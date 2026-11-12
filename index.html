@@ -77,8 +77,8 @@ footer form .pill{margin:0}footer form .pill::after{display:none}footer small{co
 #contact{background:var(--deep);display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;padding:14vh 5vw}
 #contact h2{font-size:clamp(60px,10vw,150px)}form.f{background:var(--bone);color:var(--ink);padding:28px;border-radius:28px;display:grid;gap:10px}
 .f input,.f textarea,.f select{padding:14px 16px;border-radius:14px;border:0;background:#e5141b14;font:inherit;color:inherit}
-#menu{position:fixed;inset:0;z-index:45;background:var(--bone);color:var(--ink);display:grid;place-content:center;gap:4px;text-align:center;clip-path:inset(0 0 100% 0)}
-#menu a{font:400 clamp(44px,10vw,110px) Anton,sans-serif;text-transform:uppercase;color:inherit;text-decoration:none;line-height:1}#menu a:hover{color:var(--red)}
+#menu{overflow-y:auto;padding:80px 20px 30px;position:fixed;inset:0;z-index:45;background:var(--bone);color:var(--ink);display:grid;place-content:center;gap:4px;text-align:center;clip-path:inset(0 0 100% 0)}
+#menu a{font:400 clamp(28px,5.5vw,64px) Anton,sans-serif;text-transform:uppercase;color:inherit;text-decoration:none;line-height:1}#menu a:hover{color:var(--red)}
 @media(max-width:760px){#contact{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}}
 </style></head><body>
 <div id="loader"><span>P</span><span>K</span></div>
@@ -131,7 +131,7 @@ footer form .pill{margin:0}footer form .pill::after{display:none}footer small{co
 <section id="vid" class="card sec"><h2>About <span class="tag">PK</span></h2><button class="play" id="pb">Play</button></section>
 <div id="vo"><div>Brand video<br>goes here<br><small style="font:400 16px Inter">Click anywhere to close</small></div></div>
 <section id="contact" class="card"><h2>Get in<br><span class="tag">touch</span></h2><form class="f" onsubmit="return false"><b style="font:400 28px Anton;text-transform:uppercase">Don’t be shy. Hit us up and we’ll get back to you.</b><input placeholder="Full name"><input type="email" placeholder="Email address"><select><option>Subject</option><option>Orders</option><option>Crew programme</option><option>Stockists</option></select><textarea rows="4" placeholder="Message"></textarea><button class="pill" style="background:var(--red);color:#fff;width:fit-content">Submit</button></form></section>
-<div id="menu"><a href="shop.html">Shop</a><a href="stockists.html">Find in stores</a><a href="about.html">About us</a><a href="nutrition.html">Nutrition</a><a href="faq.html">FAQ</a><a href="talks.html">Tasty talks</a><a href="crew.html">Programs</a><a href="contact.html">Contacts</a></div>
+<div id="menu"><a href="shop.html">Shop</a><a href="stockists.html">Find in stores</a><a href="about.html">About us</a><a href="nutrition.html">Nutrition</a><a href="guide.html">Product guide</a><a href="wholesale.html">Stock PK</a><a href="faq.html">FAQ</a><a href="talks.html">Tasty talks</a><a href="crew.html">Programs</a><a href="contact.html">Contacts</a></div>
 <footer><h2>#Fuel<span>YourPotential</span></h2>
 <form onsubmit="return false"><input type="email" placeholder="Enter your email" aria-label="Email"><button class="pill">Join the crew</button></form>
 <small>© PK Creatine Gummies. Dietary supplement. Keep out of reach of children. Do not exceed the recommended daily dose.</small></footer>
