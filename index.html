@@ -31,7 +31,7 @@ nav div{display:flex;gap:8px;align-items:center}nav .pill{padding:10px 18px;font
 #stmt p{margin-top:36px;color:#ffe3e3}
 .marq{background:var(--green);color:var(--black);overflow:hidden;white-space:nowrap;padding:14px 0;font:400 28px Anton,sans-serif;text-transform:uppercase;transform:rotate(-1.5deg);margin:-20px -10px 0;position:relative;z-index:5}
 .marq div{display:inline-block;animation:m 22s linear infinite}@keyframes m{to{transform:translateX(-50%)}}
-#flav{background:var(--bone);color:var(--ink);overflow:hidden;padding-top:60px}#flav .pin{position:relative}.flavour-guide{position:absolute;z-index:4;bottom:max(26px,env(safe-area-inset-bottom,0px));left:6vw;right:6vw;display:flex;align-items:center;gap:16px;font:600 11px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#333}.flavour-guide .arrow{display:grid;place-items:center;background:var(--ink);color:white;width:36px;height:36px;border-radius:50%;font-size:18px;flex-shrink:0}.flavour-guide a{color:inherit;white-space:nowrap;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}.flavour-progress{height:3px;background:#15151525;flex:1;overflow:hidden}.flavour-progress span{display:block;width:100%;height:100%;background:var(--red);transform-origin:left;transform:scaleX(0);will-change:transform}
+#flav{background:var(--bone);color:var(--ink);overflow:hidden;padding-top:0}#flav .pin{position:relative}.flavour-guide{position:absolute;z-index:4;bottom:max(26px,env(safe-area-inset-bottom,0px));left:6vw;right:6vw;display:flex;align-items:center;gap:16px;font:600 11px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#333}.flavour-guide .arrow{display:grid;place-items:center;background:var(--ink);color:white;width:36px;height:36px;border-radius:50%;font-size:18px;flex-shrink:0}.flavour-guide a{color:inherit;white-space:nowrap;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}.flavour-progress{height:3px;background:#15151525;flex:1;overflow:hidden}.flavour-progress span{display:block;width:100%;height:100%;background:var(--red);transform-origin:left;transform:scaleX(0);will-change:transform}
 .pin{height:100svh;display:flex;align-items:center}
 .track{display:flex;gap:4vw;padding:0 6vw;align-items:center;will-change:transform}
 .track>h2{font-size:clamp(50px,9vw,150px);flex:0 0 auto;width:min(70vw,720px)}
@@ -151,6 +151,8 @@ if (!window.gsap || !window.ScrollTrigger) {
 </script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
+// Mobile browser chrome changes height while scrolling; avoid recalculating pin positions for those small changes.
+ScrollTrigger.config({ignoreMobileResize:true});
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 $('#mq').innerHTML=('Fuel your potential ★ 5000mg creatine ★ Vegan ★ Train harder ★ ').repeat(8);
@@ -171,8 +173,10 @@ gsap.to('#sh .w',{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:'#stmt
 const tr=$('#tr');
 $('#flavour-hint').textContent=matchMedia('(max-width: 760px)').matches?'Swipe up to explore':'Scroll to explore';
 const distance=()=>Math.max(0,tr.scrollWidth-document.documentElement.clientWidth+Math.round(innerWidth*.06));
-const h=gsap.to(tr,{x:()=>-distance(),ease:'none',scrollTrigger:{trigger:'#flav .pin',start:'top top',end:()=>'+='+Math.max(1,distance()*(matchMedia('(max-width: 760px)').matches?1.35:.9)),pin:true,scrub:0.85,invalidateOnRefresh:true,onUpdate:self=>gsap.set('#flavour-progress-fill',{scaleX:self.progress})}});
+const h=gsap.to(tr,{x:()=>-distance(),ease:'none',scrollTrigger:{trigger:'#flav',start:'top top',end:()=>'+='+Math.max(1,distance()*(matchMedia('(max-width: 760px)').matches?1.35:.9)),pin:true,anticipatePin:1,scrub:0.85,invalidateOnRefresh:true,onUpdate:self=>gsap.set('#flavour-progress-fill',{scaleX:self.progress})}});
 $$('.fc').forEach((c,i)=>{gsap.fromTo(c,{rotate:i%2?-5:5},{rotate:0,ease:'none',scrollTrigger:{trigger:c,containerAnimation:h,start:'left 95%',end:'center 50%',scrub:true}});c.addEventListener('focus',()=>{const st=h.scrollTrigger;if(!st||!distance())return;const target=Math.max(0,Math.min(1,(c.offsetLeft-innerWidth*.14)/distance()));window.scrollTo({top:st.start+target*(st.end-st.start),behavior:'auto'})})});
+// Fonts can change the sections above the pin after the first measurement.
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=>ScrollTrigger.refresh());
 addEventListener('resize',()=>{$('#flavour-hint').textContent=matchMedia('(max-width: 760px)').matches?'Swipe up to explore':'Scroll to explore'});
 // stat pills, strips, label
 gsap.from('.stats div',{y:50,opacity:0,stagger:.1,scrollTrigger:{trigger:'.stats',start:'top 85%'}});
