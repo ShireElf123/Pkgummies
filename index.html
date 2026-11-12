@@ -83,7 +83,7 @@ footer form .pill{margin:0}footer form .pill::after{display:none}footer small{co
 #menu a{font:400 clamp(28px,5.5vw,64px) Anton,sans-serif;text-transform:uppercase;color:inherit;text-decoration:none;line-height:1}#menu a:hover{color:var(--red)}
 @media(max-width:760px){#contact{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}#flav .pin{height:100svh;min-height:0;overflow:hidden}#flav .track{padding-top:clamp(30px,6svh,56px)}.flavour-guide{gap:9px;font-size:10px;letter-spacing:.06em}.flavour-guide .arrow{width:30px;height:30px}.track>h2{width:68vw}.track{padding:40px 6vw 70px}.track>h2,.fc{scroll-snap-align:center}.fc{width:min(76vw,380px)}#menu{place-content:start center;padding-top:100px;padding-bottom:40px}#hero h1{font-size:clamp(48px,13vw,90px)}.g4w{grid-template-columns:1fr 1fr}.g4{min-height:130px;padding:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#flav .pin{height:auto;min-height:70vh;overflow-x:auto;scroll-snap-type:x proximity}.flavour-guide{position:sticky;left:6vw;min-width:88vw;align-self:flex-end;margin-right:-88vw;bottom:20px}#stmt h2 .w{opacity:1}.fc img{transition:none}}
-</style></head><body>
+</style><noscript><style>#loader{display:none!important}#flav .pin{height:auto;min-height:70vh;overflow-x:auto}#mb{display:none}#menu{position:static;clip-path:none;display:flex;flex-wrap:wrap;gap:16px;padding:24px;background:#111}#menu a{font-size:20px}#flav .fc[role=button]{display:none}</style></noscript></head><body>
 <div id="loader" role="status" aria-label="Loading PK Creatine Gummies"><img class="loader-logo" src="assets/pk-logo.png" alt="PK"><span class="loader-caption">Fuel your potential</span></div>
 <nav><a href="index.html" aria-label="PK Gummies home"><img class="nav-logo" src="assets/pk-logo.png" alt="PK"></a><div><button class="pill" id="mb" aria-expanded="false" aria-controls="menu" style="background:#fff">Menu</button><a class="pill" style="background:var(--red);color:#fff" href="shop.html">Shop</a></div></nav>
 
@@ -133,7 +133,7 @@ footer form .pill{margin:0}footer form .pill::after{display:none}footer small{co
 <div class="tiles"><div class="tile" style="background:linear-gradient(160deg,var(--red),#000)">Train together</div><div class="tile" style="background:linear-gradient(160deg,#2c8a14,#000);margin-top:30px">Feel good</div><div class="tile" style="background:linear-gradient(160deg,#444,#000)">Share the journey</div><div class="tile" style="background:linear-gradient(160deg,var(--deep),#000);margin-top:30px">Fuel your potential</div></div></section>
 <section id="vid" class="card sec"><h2>About <span class="tag">PK</span></h2><p style="margin-top:22px">Creatine, but chewable. Get to know the brand.</p><a class="pill" style="margin-top:30px" href="about.html">Meet PK</a></section>
 <section id="contact" class="card"><h2>Get in<br><span class="tag">touch</span></h2><div class="contact-panel"><h3>Let’s connect</h3><p>Questions about PK, the crew or becoming a stockist? Contact details are being set up.</p><a class="pill" style="background:var(--red);color:#fff" href="contact.html">Contact information</a></div></section>
-<div id="menu" inert><a href="index.html">Home</a><a href="shop.html">Flavours &amp; info</a><a href="about.html">About</a><a href="crew.html">Crew</a><a href="contact.html">Contact</a></div>
+<noscript><nav aria-label="Site navigation" style="position:static;background:#111;border-radius:0"><a href="index.html">Home</a> · <a href="shop.html">Flavours &amp; info</a> · <a href="about.html">About</a> · <a href="crew.html">Crew</a> · <a href="contact.html">Contact</a></nav></noscript><div id="menu" inert><a href="index.html">Home</a><a href="shop.html">Flavours &amp; info</a><a href="about.html">About</a><a href="crew.html">Crew</a><a href="contact.html">Contact</a></div>
 <footer><h2>#Fuel<span>YourPotential</span></h2>
 <p style="margin:28px 0 38px;color:#bbb">Want to be part of the community?</p><a class="pill" href="crew.html">Explore the crew</a><br><br>
 <small>© PK Creatine Gummies. Dietary supplement. Keep out of reach of children. Do not exceed the recommended daily dose.</small></footer>
@@ -150,11 +150,13 @@ if (!window.gsap || !window.ScrollTrigger) {
 }
 </script>
 <script>
+if (window.gsap && window.ScrollTrigger) {
 gsap.registerPlugin(ScrollTrigger);
 // Mobile browser chrome changes height while scrolling; avoid recalculating pin positions for those small changes.
 ScrollTrigger.config({ignoreMobileResize:true});
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let restoringFocus=false;
 $('#mq').innerHTML=('Fuel your potential ★ 5000mg creatine ★ Vegan ★ Train harder ★ ').repeat(8);
 // loader
 if (!reduced) {
@@ -174,7 +176,7 @@ const tr=$('#tr');
 $('#flavour-hint').textContent=matchMedia('(max-width: 760px)').matches?'Swipe up to explore':'Scroll to explore';
 const distance=()=>Math.max(0,tr.scrollWidth-document.documentElement.clientWidth+Math.round(innerWidth*.06));
 const h=gsap.to(tr,{x:()=>-distance(),ease:'none',scrollTrigger:{trigger:'#flav',start:'top top',end:()=>'+='+Math.max(1,distance()*(matchMedia('(max-width: 760px)').matches?1.35:.9)),pin:true,anticipatePin:1,scrub:0.85,invalidateOnRefresh:true,onUpdate:self=>gsap.set('#flavour-progress-fill',{scaleX:self.progress})}});
-$$('.fc').forEach((c,i)=>{gsap.fromTo(c,{rotate:i%2?-5:5},{rotate:0,ease:'none',scrollTrigger:{trigger:c,containerAnimation:h,start:'left 95%',end:'center 50%',scrub:true}});c.addEventListener('focus',()=>{const st=h.scrollTrigger;if(!st||!distance())return;const target=Math.max(0,Math.min(1,(c.offsetLeft-innerWidth*.14)/distance()));window.scrollTo({top:st.start+target*(st.end-st.start),behavior:'auto'})})});
+$$('.fc').forEach((c,i)=>{gsap.fromTo(c,{rotate:i%2?-5:5},{rotate:0,ease:'none',scrollTrigger:{trigger:c,containerAnimation:h,start:'left 95%',end:'center 50%',scrub:true}});c.addEventListener('focus',()=>{const st=h.scrollTrigger;if(!st||!distance()||!c.matches(':focus-visible')||restoringFocus)return;const target=Math.max(0,Math.min(1,(c.offsetLeft-innerWidth*.14)/distance()));window.scrollTo({top:st.start+target*(st.end-st.start),behavior:'auto'})})});
 // Fonts can change the sections above the pin after the first measurement.
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=>ScrollTrigger.refresh());
 addEventListener('resize',()=>{$('#flavour-hint').textContent=matchMedia('(max-width: 760px)').matches?'Swipe up to explore':'Scroll to explore'});
@@ -186,9 +188,9 @@ gsap.from('#lab',{scale:.85,rotate:-4,opacity:0,scrollTrigger:{trigger:'#lab',st
 // flavour modal (stacked-card pop)
 const m=$('#modal');
 let opener; $$('.fc:not(.soon):not(.concept)').forEach(c=>{c.onclick=()=>{opener=c;$('#mt').textContent=c.dataset.n;m.style.display='grid';gsap.fromTo('.mp',{y:reduced?0:140,scale:reduced?1:.9,opacity:reduced?1:0},{y:0,scale:1,opacity:1,duration:reduced?0:.5,ease:'power3.out'});$('.x').focus()};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}}});
-const close=()=>gsap.to('.mp',{y:140,opacity:0,duration:reduced?0:.3,onComplete:()=>{m.style.display='none';if(opener)opener.focus()}});
+const close=()=>gsap.to('.mp',{y:140,opacity:0,duration:reduced?0:.3,onComplete:()=>{m.style.display='none';if(opener){restoringFocus=true;opener.focus({preventScroll:true});restoringFocus=false}}});
 $('.x').onclick=close;m.onclick=e=>{if(e.target===m)close()};
-addEventListener('keydown',e=>{if(e.key==='Escape'&&m.style.display==='grid')close()});
+addEventListener('keydown',e=>{if(m.style.display!=='grid')return;if(e.key==='Escape'){close();return}if(e.key==='Tab'){const controls=[...m.querySelectorAll('button,a[href]')];const first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
 
 // menu overlay
 const mn=$('#menu'),mb=$('#mb');let mo=false;
@@ -200,5 +202,6 @@ $$('.pc').forEach((c,i)=>gsap.fromTo(c,{rotate:(i-1)*9,y:80,opacity:0},{rotate:(
 $$('.g4').forEach((c,i)=>gsap.from(c,{y:60,opacity:0,scrollTrigger:{trigger:c,start:'top 92%'},delay:(i%2)*.1}));
 gsap.from('#map .pin',{scale:0,stagger:.15,ease:'back.out(3)',scrollTrigger:{trigger:'#map',start:'top 60%'}});
 gsap.from('.tile',{y:90,opacity:0,stagger:.12,scrollTrigger:{trigger:'.tiles',start:'top 85%'}});
+}
 }
 </script></body></html>
