@@ -26,3 +26,5 @@ body{overflow-x:hidden}
 .pk-reveal.is-visible{opacity:1;transform:none}
 @media(max-width:700px){.hero{padding:78px 6vw 75px}.pk-feature{grid-template-columns:1fr}.pk-feature img{max-width:300px}.section .card:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pk-ribbon span{animation:none}.pk-reveal{opacity:1;transform:none;transition:none}.section .card,.hero .product-hero img,.page-jumps a{transition:none}.section .card:hover,.hero .product-hero img:hover{transform:none}}
+/* Long slogans must not widen the mobile viewport. */
+footer strong{display:block;overflow-wrap:anywhere}
