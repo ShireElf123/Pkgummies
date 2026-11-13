@@ -170,7 +170,7 @@ gsap.timeline().from('#loader .loader-logo',{scale:.72,rotate:-8,opacity:0,durat
 // floating gummies with depth of field and parallax
 const hero=$('#hero');
 for(let i=0;i<16;i++){const g=document.createElement('div');g.className='gum';const s=28+Math.random()*70;
-Object.assign(g.style,{width:s+'px',height:s*.9+'px',left:Math.random()*96+'%',top:Math.random()*92+'%',filter:`blur(${s>70||s<38?4:0}px)`,transform:`rotate(${Math.random()*360}deg)`,zIndex:s>60?3:1});
+Object.assign(g.style,{width:s+'px',height:s*.9+'px',left:Math.random()*96+'%',top:(matchMedia('(max-width: 760px)').matches?55+Math.random()*36:Math.random()*92)+'%',filter:`blur(${s>70||s<38?4:0}px)`,transform:`rotate(${Math.random()*360}deg)`,zIndex:1});
 hero.appendChild(g);gsap.to(g,{y:'+=26',rotate:'+=40',duration:2+Math.random()*3,yoyo:true,repeat:-1,ease:'sine.inOut'});
 gsap.to(g,{yPercent:-150*s/100,scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true}})}
 // word-by-word statement
