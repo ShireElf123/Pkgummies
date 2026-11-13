@@ -1,0 +1,7 @@
+/* A page transition stays out of layout and never blocks links without JavaScript. */
+html::after{content:"";position:fixed;inset:0;z-index:9999;background:#e5141b;transform:translateY(-101%);pointer-events:none}
+@media (prefers-reduced-motion:no-preference){
+ html.pk-leaving::after{transform:translateY(0);transition:transform .48s cubic-bezier(.76,0,.24,1)}
+ html.pk-arriving::after{animation:pk-curtain-drop .55s .08s cubic-bezier(.76,0,.24,1) both}
+ @keyframes pk-curtain-drop{from{transform:translateY(0)}to{transform:translateY(101%)}}
+}
